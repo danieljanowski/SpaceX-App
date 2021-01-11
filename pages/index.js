@@ -1,8 +1,10 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import React from 'react';
+import Head from 'next/head';
+import styles from '../styles/Home.module.css';
+import Card from './components/Card';
 
 export const getStaticProps = async () => {
-  const res = await fetch("https://api.spacexdata.com/v3/launches/past");
+  const res = await fetch('https://api.spacexdata.com/v3/launches/past');
   const pastMissionsData = await res.json();
 
   if (!pastMissionsData) {
@@ -31,17 +33,9 @@ export default function Home({ pastMissionsData }) {
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to SpaceX App</h1>
 
-        {/* <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p> */}
-
         <div className={styles.grid}>
-          {pastMissionsData.map((mission, { id }) => (
-            <missioncard className={styles.card} key={id}>
-              <h3>title</h3>
-              <p>{mission.details}</p>
-            </missioncard>
+          {pastMissionsData.map((mission) => (
+            <Card mission={mission} key={mission.flight_number} />
           ))}
         </div>
       </main>
@@ -52,7 +46,7 @@ export default function Home({ pastMissionsData }) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
+          Powered by{' '}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
