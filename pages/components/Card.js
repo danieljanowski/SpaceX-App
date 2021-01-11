@@ -6,10 +6,12 @@ import styles from '../../styles/Card.module.css';
 function Card({ mission }) {
   return (
     <div className={styles.card}>
-      <h3 className={styles.cardTitle}>
-        {' '}
-        # {mission.flight_number} {mission.mission_name}
-      </h3>
+      <div className={styles.cardTitle}>
+        <h3 className={styles.titleText}>
+          {' '}
+          # {mission.flight_number} {mission.mission_name}{' '}
+        </h3>
+      </div>
 
       {/* {mission.links.mission_patch_small && (
         <Link href={mission.links.mission_patch_small}>
@@ -18,7 +20,7 @@ function Card({ mission }) {
       )} */}
 
       <img
-        className={styles.img}
+        className={styles.logo}
         src={mission.links.mission_patch_small}
         alt="mission logo"
       />
