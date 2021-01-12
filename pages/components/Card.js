@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/Link';
-// import Image from 'next/Image';
+import Link from 'next/link';
+import Image from 'next/image';
 import styles from '../../styles/Card.module.css';
 
 function Card({ mission }) {
@@ -9,7 +9,7 @@ function Card({ mission }) {
       <div className={styles.cardTitle}>
         <h3 className={styles.titleText}>
           {' '}
-          # {mission.flight_number} {mission.mission_name}{' '}
+          {mission.flight_number}. {mission.mission_name}{' '}
         </h3>
       </div>
 
@@ -25,26 +25,49 @@ function Card({ mission }) {
         alt="mission logo"
       />
 
-      {/* getting error when using "Image" image:1 GET  500 (Internal Server Error) */}
-      {/* {mission.links.mission_patch_small && (
-        <Image
-          src={mission.links.mission_patch_small}
-          alt="misson logo"
-          layout="responsive"
-        />
-      )} */}
+      {/* getting error when using "Image" image:1 GET  500 (Internal Server Error) CERT_HAS_EXPIRED */}
+      {/* <div className={styles.logo}>
+        {mission.links.mission_patch_small && (
+          <Image
+            src={mission.links.mission_patch_small}
+            alt="misson logo"
+            width={500}
+            height={500}
+            // layout="fill"
+          />
+        )}
+      </div> */}
 
       <div className={styles.missionDetails}>
+        {/* {mission.rocket.first_stage && ( */}
+        {/* <p>{console.log(mission.rocket.first_stage.cores[0].landing_intent)}</p> */}
+        {/* )} */}
+
+        <p>
+          Launch:
+          {mission.launch_success ? ' successful' : ' failure'}
+        </p>
+
+        {mission.launch_success &&
+          (mission.rocket.first_stage.cores[0].landing_intent ? (
+            <p>Landing attempt: yes</p>
+          ) : (
+            <p>Landing attempt: no</p>
+          ))}
+
+        {mission.launch_success &&
+          mission.rocket.first_stage.cores[0].landing_intent &&
+          (mission.rocket.first_stage.cores[0].land_success ? (
+            <p>Landing success: yes</p>
+          ) : (
+            <p>Landing success: no</p>
+          ))}
+
         {mission.links.article_link && (
           <Link href={mission.links.article_link}>
             <a>Article link</a>
           </Link>
         )}
-
-        <h6>
-          Launch:
-          {mission.launch_success ? ' successful' : ' failure'}
-        </h6>
       </div>
     </div>
   );
