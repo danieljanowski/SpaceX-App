@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import styles from '../../styles/Card.module.css';
+// import Image from 'next/image';
+import styles from '../../styles/Card.module.scss';
 
 function Card({ mission }) {
   return (
@@ -65,7 +65,7 @@ function Card({ mission }) {
 
         {mission.links.article_link && (
           <Link href={mission.links.article_link}>
-            <a>Article link</a>
+            <a className="articleLink">Article link</a>
           </Link>
         )}
       </div>

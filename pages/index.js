@@ -1,7 +1,8 @@
 import React from 'react';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/Home.module.scss';
 import Card from './components/Card';
+import Search from './components/Search';
 
 export const getStaticProps = async () => {
   const res = await fetch('https://api.spacexdata.com/v3/launches/past');
@@ -32,7 +33,7 @@ export default function Home({ pastMissionsData }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to SpaceX App</h1>
-
+        <Search />
         <div className={styles.grid}>
           {pastMissionsData.map((mission) => (
             <Card mission={mission} key={mission.flight_number} />
