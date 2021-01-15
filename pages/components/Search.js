@@ -1,10 +1,19 @@
 import React from 'react';
 
-function Search() {
+function Search({ handleSearchDataChange }) {
   return (
     <div>
       <p>This is search component</p>
-      {/* <div className="search"></div> */}
+      {/* <form onSubmit={(e) => e.preventDefault()} className="search"> */}
+      {/* <label htmlFor="textSearch">Search</label> */}
+      <input
+        onChange={handleSearchDataChange}
+        className="text-search"
+        type="text"
+        placeholder="Search"
+        name="textSearch"
+      />
+      {/* </form> */}
     </div>
   );
 }

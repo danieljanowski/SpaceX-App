@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import styles from '../styles/Home.module.scss';
 import Card from './components/Card';
@@ -24,6 +24,20 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ pastMissionsData }) {
+  const [searchData, setSearchData] = useState({ textSearch: '' });
+
+  const handleSearchDataChange = (e) => {
+    setSearchData({ ...searchData, [e.target.name]: e.target.value });
+  };
+
+  const searchResults = () =>
+    pastMissionsData.filter(
+      (mission) =>
+        `${mission.mission_name} ${mission.details}`
+          .toLowerCase()
+          .search(searchData.textSearch.toLowerCase()) >= 0,
+    );
+
   return (
     <div className={styles.container}>
       <Head>
@@ -33,9 +47,9 @@ export default function Home({ pastMissionsData }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to SpaceX App</h1>
-        <Search />
+        <Search handleSearchDataChange={handleSearchDataChange} />
         <div className={styles.grid}>
-          {pastMissionsData.map((mission) => (
+          {searchResults().map((mission) => (
             <Card mission={mission} key={mission.flight_number} />
           ))}
         </div>
