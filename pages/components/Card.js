@@ -39,10 +39,6 @@ function Card({ mission }) {
       </div> */}
 
       <div className={styles.missionDetails}>
-        {/* {mission.rocket.first_stage && ( */}
-        {/* <p>{console.log(mission.rocket.first_stage.cores[0].landing_intent)}</p> */}
-        {/* )} */}
-
         <p>
           Launch:
           {mission.launch_success ? ' successful' : ' failure'}
@@ -68,8 +64,7 @@ function Card({ mission }) {
           //   <a className="articleLink">Article link</a>
           // </Link>
 
-          // <Link href={`/${mission.flight_number}`}>
-          <Link href={mission.links.article_link}>
+          <Link href={`/${mission.flight_number}`}>
             <button className={styles.moreButton} type="button">
               MORE DETAILS
             </button>

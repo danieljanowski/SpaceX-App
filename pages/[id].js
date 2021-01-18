@@ -1,20 +1,13 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
-export default function MissionDetails(props) {
+export default function MissionDetails() {
+  const router = useRouter();
+  const missionId = router.query.id;
+
   return (
-    <div>
-      <p>mission details</p>
-    </div>
+    <>
+      <p>Mission ID {missionId} passed into component, yay!</p>
+    </>
   );
 }
-
-export async function getStaticPaths() {
-  const res = await fetch('https://api.spacexdata.com/v3/launches/past');
-  const pastMissionsData = await res.json();
-  const paths = pastMissionsData.map((mission) => ({
-    params: { id: mission.flight_number },
-  }));
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {}
