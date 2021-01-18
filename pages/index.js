@@ -3,6 +3,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.scss';
 import Card from './components/Card';
 import Search from './components/Search';
+import searchResults from '../utils/searchResults';
 
 export const getStaticProps = async () => {
   const res = await fetch('https://api.spacexdata.com/v3/launches/past');
@@ -30,48 +31,6 @@ export default function Home({ pastMissionsData }) {
     setSearchData({ ...searchData, [e.target.name]: e.target.value });
   };
 
-  const searchResults = () => {
-    let selectorSearchResult = {};
-    switch (searchData.launchSuccess) {
-      case 'yes':
-        selectorSearchResult = pastMissionsData.filter(
-          (mission) => mission.launch_success === true,
-        );
-        break;
-      case 'no':
-        selectorSearchResult = pastMissionsData.filter(
-          (mission) => mission.launch_success === false,
-        );
-        break;
-      default:
-        selectorSearchResult = pastMissionsData;
-    }
-
-    switch (searchData.landingSuccess) {
-      case 'yes':
-        selectorSearchResult = selectorSearchResult.filter(
-          (mission) =>
-            mission.rocket.first_stage.cores[0].land_success === true,
-        );
-        break;
-      case 'no':
-        selectorSearchResult = selectorSearchResult.filter(
-          (mission) =>
-            mission.rocket.first_stage.cores[0].land_success === false,
-        );
-        break;
-      default:
-        break;
-    }
-
-    return selectorSearchResult.filter(
-      (mission) =>
-        `${mission.mission_name} ${mission.details}`
-          .toLowerCase()
-          .search(searchData.textSearch.toLowerCase()) >= 0,
-    );
-  };
-
   return (
     <div className={styles.container}>
       <Head>
@@ -83,7 +42,7 @@ export default function Home({ pastMissionsData }) {
         <h1 className={styles.title}>Welcome to SpaceX App</h1>
         <Search handleSearchDataChange={handleSearchDataChange} />
         <div className={styles.grid}>
-          {searchResults().map((mission) => (
+          {searchResults(pastMissionsData, searchData).map((mission) => (
             <Card mission={mission} key={mission.flight_number} />
           ))}
         </div>

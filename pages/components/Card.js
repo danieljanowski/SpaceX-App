@@ -64,8 +64,15 @@ function Card({ mission }) {
           ))}
 
         {mission.links.article_link && (
+          // <Link href={mission.links.article_link}>
+          //   <a className="articleLink">Article link</a>
+          // </Link>
+
+          // <Link href={`/${mission.flight_number}`}>
           <Link href={mission.links.article_link}>
-            <a className="articleLink">Article link</a>
+            <button className={styles.moreButton} type="button">
+              MORE DETAILS
+            </button>
           </Link>
         )}
       </div>
