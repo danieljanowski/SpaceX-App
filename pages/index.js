@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import { connect } from 'react-redux';
 import styles from '../styles/Home.module.scss';
 import Card from './components/Card';
 import Search from './components/Search';
 import searchResults from '../utils/searchResults';
+import { setApiData } from '../redux/actions/apiActions';
 
 export const getStaticProps = async () => {
   const res = await fetch('https://api.spacexdata.com/v3/launches/past');
@@ -24,7 +26,7 @@ export const getStaticProps = async () => {
   };
 };
 
-export default function Home({ pastMissionsData }) {
+function Home({ pastMissionsData }) {
   const [searchData, setSearchData] = useState({ textSearch: '' });
 
   const handleSearchDataChange = (e) => {
@@ -61,3 +63,9 @@ export default function Home({ pastMissionsData }) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({ apiData: state });
+
+const mapDispatchToProps = { setApiData };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

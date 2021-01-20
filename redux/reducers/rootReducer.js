@@ -1,7 +1,7 @@
-import { combineReducer } from 'redux';
+import { combineReducers } from 'redux';
 import apiReducer from './apiReducer';
 
-const rootReducer = combineReducer({
+const rootReducer = combineReducers({
   apiReducer,
 });
 
