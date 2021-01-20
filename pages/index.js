@@ -71,7 +71,6 @@ function Home(props) {
 }
 
 const mapStateToProps = (state) => ({ apiData: state.apiReducer.apiData });
-// const mapStateToProps = (state) => ({ apiData: state });
 
 const mapDispatchToProps = { setApiData };
 
