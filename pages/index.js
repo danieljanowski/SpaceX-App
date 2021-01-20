@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { connect } from 'react-redux';
 import styles from '../styles/Home.module.scss';
@@ -26,8 +26,13 @@ export const getStaticProps = async () => {
   };
 };
 
-function Home({ pastMissionsData }) {
+function Home(props) {
   const [searchData, setSearchData] = useState({ textSearch: '' });
+  const { apiData, setApiData } = props;
+
+  useEffect(() => {
+    setApiData(props.pastMissionsData);
+  }, []);
 
   const handleSearchDataChange = (e) => {
     setSearchData({ ...searchData, [e.target.name]: e.target.value });
@@ -42,9 +47,10 @@ function Home({ pastMissionsData }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to SpaceX App</h1>{' '}
+        {/* {apiData.apiReducer.test} */}
         <Search handleSearchDataChange={handleSearchDataChange} />
         <div className={styles.grid}>
-          {searchResults(pastMissionsData, searchData).map((mission) => (
+          {searchResults(props.pastMissionsData, searchData).map((mission) => (
             <Card mission={mission} key={mission.flight_number} />
           ))}
         </div>
@@ -64,7 +70,8 @@ function Home({ pastMissionsData }) {
   );
 }
 
-const mapStateToProps = (state) => ({ apiData: state });
+const mapStateToProps = (state) => ({ apiData: state.apiReducer.apiData });
+// const mapStateToProps = (state) => ({ apiData: state });
 
 const mapDispatchToProps = { setApiData };
 
