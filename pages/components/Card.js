@@ -30,7 +30,7 @@ function Card({ mission }) {
         {mission.links.mission_patch_small && (
           <Image
             src={mission.links.mission_patch_small}
-            alt="misson logo"
+            alt="mission logo"
             width={500}
             height={500}
             // layout="fill"

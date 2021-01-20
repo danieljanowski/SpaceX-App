@@ -39,7 +39,7 @@ export default function Home({ pastMissionsData }) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to SpaceX App</h1>
+        <h1 className={styles.title}>Welcome to SpaceX App</h1>{' '}
         <Search handleSearchDataChange={handleSearchDataChange} />
         <div className={styles.grid}>
           {searchResults(pastMissionsData, searchData).map((mission) => (
