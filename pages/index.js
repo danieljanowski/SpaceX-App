@@ -6,6 +6,7 @@ import Card from './components/Card';
 import Search from './components/Search';
 import searchResults from '../utils/searchResults';
 import { setApiData } from '../redux/actions/apiActions';
+import { setSearchCriteria } from '../redux/actions/searchActions';
 
 export const getStaticProps = async () => {
   const res = await fetch('https://api.spacexdata.com/v3/launches/past');
@@ -27,16 +28,11 @@ export const getStaticProps = async () => {
 };
 
 function Home(props) {
-  const [searchData, setSearchData] = useState({ textSearch: '' });
   const { apiData, setApiData } = props;
 
   useEffect(() => {
     setApiData(props.pastMissionsData);
   }, []);
-
-  const handleSearchDataChange = (e) => {
-    setSearchData({ ...searchData, [e.target.name]: e.target.value });
-  };
 
   return (
     <div className={styles.container}>
@@ -48,11 +44,13 @@ function Home(props) {
       <main className={styles.main}>
         <h1 className={styles.title}>Welcome to SpaceX App</h1>{' '}
         {/* {apiData.apiReducer.test} */}
-        <Search handleSearchDataChange={handleSearchDataChange} />
+        <Search />
         <div className={styles.grid}>
-          {searchResults(props.pastMissionsData, searchData).map((mission) => (
-            <Card mission={mission} key={mission.flight_number} />
-          ))}
+          {searchResults(props.pastMissionsData, props.searchCriteria).map(
+            (mission) => (
+              <Card mission={mission} key={mission.flight_number} />
+            ),
+          )}
         </div>
       </main>
 
@@ -70,8 +68,11 @@ function Home(props) {
   );
 }
 
-const mapStateToProps = (state) => ({ apiData: state.apiReducer.apiData });
+const mapStateToProps = (state) => ({
+  apiData: state.apiReducer.apiData,
+  searchCriteria: state.searchReducer.searchCriteria,
+});
 
-const mapDispatchToProps = { setApiData };
+const mapDispatchToProps = { setApiData, setSearchCriteria };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
