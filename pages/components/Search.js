@@ -1,20 +1,19 @@
 import React from 'react';
+import styles from '../../styles/Search.module.scss';
 
 function Search({ handleSearchDataChange }) {
   return (
-    <div className="">
-      {/* <form onSubmit={(e) => e.preventDefault()} className="search"> */}
-      {/* <label htmlFor="textSearch">Search</label> */}
+    <div className={styles.searchContainer}>
       <input
         onChange={handleSearchDataChange}
-        className="text-search"
+        className={styles.textSearch}
         type="text"
         placeholder="Search"
         name="textSearch"
       />
       <select
         onChange={handleSearchDataChange}
-        className="launch-success-dropdown"
+        className={styles.launchSuccessDropdown}
         placeholder="Launch success"
         name="launchSuccess"
       >
@@ -25,7 +24,7 @@ function Search({ handleSearchDataChange }) {
 
       <select
         onChange={handleSearchDataChange}
-        className="landing-success-dropdown"
+        className={styles.landingSuccessDropdown}
         placeholder="Landing success"
         name="landingSuccess"
       >
@@ -33,7 +32,6 @@ function Search({ handleSearchDataChange }) {
         <option value="yes">Landing successful</option>
         <option value="no">Landing unsuccessful</option>
       </select>
-      {/* </form> */}
     </div>
   );
 }
