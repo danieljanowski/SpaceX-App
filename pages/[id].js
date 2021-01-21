@@ -9,15 +9,17 @@ function MissionDetails(props) {
   const { apiData } = props;
 
   useEffect(() => {
-    if (!props.apiData) router.push('/');
+    props.apiData || router.push('/');
   }),
     [];
 
-  return (
+  return apiData ? (
     <>
       <p>Mission ID {missionId} passed into component, yay!</p>
       {apiData && apiData[missionId - 1].mission_name}
     </>
+  ) : (
+    <p>Loading...</p>
   );
 }
 
