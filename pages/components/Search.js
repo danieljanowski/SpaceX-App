@@ -25,7 +25,7 @@ function Search(props) {
         placeholder="Launch success"
         name="launchSuccess"
       >
-        <option value="no choice">Launch success choice</option>
+        <option value="no choice">Launch success no choice</option>
         <option value="yes">Launch successful</option>
         <option value="no">Launch unsuccessful</option>
       </select>
@@ -36,7 +36,7 @@ function Search(props) {
         placeholder="Landing success"
         name="landingSuccess"
       >
-        <option value="no choice">Landing success choice</option>
+        <option value="no choice">Landing success no choice</option>
         <option value="yes">Landing successful</option>
         <option value="no">Landing unsuccessful</option>
       </select>

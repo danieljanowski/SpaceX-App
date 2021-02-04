@@ -28,25 +28,29 @@ export const getStaticProps = async () => {
 };
 
 function Home(props) {
-  const { apiData, setApiData } = props;
+  const { setApiData, apiData } = props;
 
   useEffect(() => {
     setApiData(props.pastMissionsData);
   }, []);
 
-  return (
+  return !props.pastMissionsData ? (
+    <p>No data</p>
+  ) : (
     <div className={styles.container}>
       <Head>
         <title>SpaceX App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <header className={styles.header}>
+        <h1 className={styles.title}>SpaceX App</h1> <Search />
+      </header>
+
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to SpaceX App</h1>{' '}
-        {/* {apiData.apiReducer.test} */}
-        <Search />
         <div className={styles.grid}>
-          {searchResults(props.pastMissionsData, props.searchCriteria).map(
+          {props.pastMissionsData.map(
+            // {searchResults(props.pastMissionsData, props.searchCriteria).map(
             (mission) => (
               <Card mission={mission} key={mission.flight_number} />
             ),

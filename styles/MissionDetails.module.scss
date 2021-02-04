@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: antiquewhite;
+  padding: 1rem 3rem;
+}
+
+.missionSummaryCardContainer {
+  width: 80vw;
+}
