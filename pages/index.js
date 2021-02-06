@@ -6,6 +6,7 @@ import Card from './components/Card';
 import Search from './components/Search';
 import searchResults from '../utils/searchResults';
 import { setApiData } from '../redux/actions/apiActions';
+import { setSearchCriteria } from '../redux/actions/searchActions';
 
 export const getStaticProps = async () => {
   const res = await fetch('https://api.spacexdata.com/v3/launches/past');
@@ -27,32 +28,33 @@ export const getStaticProps = async () => {
 };
 
 function Home(props) {
-  const [searchData, setSearchData] = useState({ textSearch: '' });
-  const { apiData, setApiData } = props;
+  const { setApiData, apiData } = props;
 
   useEffect(() => {
     setApiData(props.pastMissionsData);
   }, []);
 
-  const handleSearchDataChange = (e) => {
-    setSearchData({ ...searchData, [e.target.name]: e.target.value });
-  };
-
-  return (
+  return !props.pastMissionsData ? (
+    <p>No data</p>
+  ) : (
     <div className={styles.container}>
       <Head>
         <title>SpaceX App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <header className={styles.header}>
+        <h1 className={styles.title}>SpaceX App</h1> <Search />
+      </header>
+
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to SpaceX App</h1>{' '}
-        {/* {apiData.apiReducer.test} */}
-        <Search handleSearchDataChange={handleSearchDataChange} />
         <div className={styles.grid}>
-          {searchResults(props.pastMissionsData, searchData).map((mission) => (
-            <Card mission={mission} key={mission.flight_number} />
-          ))}
+          {props.pastMissionsData.map(
+            // {searchResults(props.pastMissionsData, props.searchCriteria).map(
+            (mission) => (
+              <Card mission={mission} key={mission.flight_number} />
+            ),
+          )}
         </div>
       </main>
 
@@ -70,8 +72,11 @@ function Home(props) {
   );
 }
 
-const mapStateToProps = (state) => ({ apiData: state.apiReducer.apiData });
+const mapStateToProps = (state) => ({
+  apiData: state.apiReducer.apiData,
+  searchCriteria: state.searchReducer.searchCriteria,
+});
 
-const mapDispatchToProps = { setApiData };
+const mapDispatchToProps = { setApiData, setSearchCriteria };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

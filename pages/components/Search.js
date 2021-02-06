@@ -1,7 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styles from '../../styles/Search.module.scss';
+import { setSearchCriteria } from '../../redux/actions/searchActions';
 
-function Search({ handleSearchDataChange }) {
+function Search(props) {
+  const { searchCriteria, setSearchCriteria } = props;
+
+  const handleSearchDataChange = (e) => {
+    setSearchCriteria({ ...searchCriteria, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className={styles.searchContainer}>
       <input
@@ -17,7 +25,7 @@ function Search({ handleSearchDataChange }) {
         placeholder="Launch success"
         name="launchSuccess"
       >
-        <option value="no choice">Launch success choice</option>
+        <option value="no choice">Launch success no choice</option>
         <option value="yes">Launch successful</option>
         <option value="no">Launch unsuccessful</option>
       </select>
@@ -28,7 +36,7 @@ function Search({ handleSearchDataChange }) {
         placeholder="Landing success"
         name="landingSuccess"
       >
-        <option value="no choice">Landing success choice</option>
+        <option value="no choice">Landing success no choice</option>
         <option value="yes">Landing successful</option>
         <option value="no">Landing unsuccessful</option>
       </select>
@@ -36,4 +44,10 @@ function Search({ handleSearchDataChange }) {
   );
 }
 
-export default Search;
+const mapStateToProps = (state) => ({
+  searchCriteria: state.searchReducer.searchCriteria,
+});
+
+const mapDispatchToProps = { setSearchCriteria };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);
